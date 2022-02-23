@@ -13,3 +13,4 @@ export 'quantity/_all.dart';
 export 'theme/_all.dart';
 export 'register/_all.dart';
 export 'reset_password/_all.dart';
+export 'movie/_all.dart';

@@ -71,6 +71,11 @@ class ContextServiceProviderBlocs extends StatelessWidget {
         BlocProvider<ResetPasswordBloc>(
           create: (BuildContext context) => ResetPasswordBloc(),
         ),
+        BlocProvider<MovieBloc>(
+          create: (BuildContext context) => MovieBloc(
+            movieRepository: context.serviceProvider.movieRepository,
+          ),
+        ),
         // *
         // * With dependencies
         // *

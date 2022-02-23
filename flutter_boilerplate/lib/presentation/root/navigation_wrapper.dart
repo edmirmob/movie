@@ -1,5 +1,7 @@
 import 'package:flutter_boilerplate/_all.dart';
 
+import '../pages/movie/movie_widget.dart';
+
 class NavigationWrapper extends StatefulWidget {
   @override
   State<NavigationWrapper> createState() => _NavigationWrapperState();
@@ -9,7 +11,7 @@ class _NavigationWrapperState extends State<NavigationWrapper> {
   @override
   void initState() {
     super.initState();
-
+    context.read<MovieBloc>().add(MovieLoadEvent());
     context.locationBloc.add(LocationCheckEvent());
   }
 
@@ -22,17 +24,21 @@ class _NavigationWrapperState extends State<NavigationWrapper> {
             switch (state.index) {
               case 0:
                 return Scaffold(
-                  appBar: AppBar(title: Text(context.translations.applicationName)),
-                  body: const Center(child: Text('First page')),
+                  appBar:
+                      AppBar(title: Text(context.translations.applicationName)),
+                  body: const MovieWidget(),
+                  // const Center(child: Text('First page')),
                 );
               case 1:
                 return Scaffold(
-                  appBar: AppBar(title: Text(context.translations.applicationName)),
+                  appBar:
+                      AppBar(title: Text(context.translations.applicationName)),
                   body: const Center(child: Text('Second page')),
                 );
               case 2:
                 return Scaffold(
-                  appBar: AppBar(title: Text(context.translations.applicationName)),
+                  appBar:
+                      AppBar(title: Text(context.translations.applicationName)),
                   body: const Center(child: Text('Third page')),
                 );
             }
@@ -45,7 +51,9 @@ class _NavigationWrapperState extends State<NavigationWrapper> {
 
   Widget _buildBottomNavigationBar(BuildContext context, int currentIndex) {
     return BottomNavigationBar(
-      onTap: (index) => context.read<NavigationBloc>().add(NavigationChangeIndexEvent(index: index)),
+      onTap: (index) => context
+          .read<NavigationBloc>()
+          .add(NavigationChangeIndexEvent(index: index)),
       currentIndex: currentIndex,
       items: const [
         BottomNavigationBarItem(

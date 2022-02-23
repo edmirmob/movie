@@ -36,6 +36,8 @@ abstract class ServiceProvider {
   late IGalleryRepository galleryRepository;
   late ILocationRepository locationRepository;
   late IAuthenticationRepository authenticationRepository;
+  late IMovieRepository movieRepository;
+  
   //Add new repositories and services here
   //...
 
@@ -85,6 +87,7 @@ abstract class ServiceProvider {
     galleryRepository = GalleryRepository();
     locationRepository = LocationRepository(appSettings: appSettings);
     authenticationRepository = AuthenticationRepository(restApiClient: restApiClient, storageRepository: secureStorageRepository);
+    movieRepository = MovieRepository(restApiClient: restApiClient);
   }
 
   Future<void> initExceptionHandling() async {

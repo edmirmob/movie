@@ -1,4 +1,4 @@
-import 'package:flutter_boilerplate/_all.dart';
+import '/../_all.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class MovieWidget extends StatefulWidget {
@@ -13,22 +13,21 @@ class MovieWidget extends StatefulWidget {
 class _MovieWidgetState extends State<MovieWidget> {
   final refreshController = RefreshController();
 
-  @override
-  void dispose() {
-    refreshController.dispose();
-    super.dispose();
-  }
-
+  ScrollController scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<MovieBloc, MovieState>(
       listener: (context, movieState) {
-        if ([
-          MovieStateStatus.loaded,
-        ].contains(movieState.status)) {
+        if (movieState.status == MovieStateStatus.loadedMore) {
+          refreshController.loadComplete();
+        }
+        if (movieState.status == MovieStateStatus.loaded) {
           refreshController.loadComplete();
         }
 
+        if (movieState.totalResult == movieState.items.length.toString()) {
+          refreshController.loadComplete();
+        }
         if (movieState.status == MovieStateStatus.refreshed) {
           refreshController.refreshCompleted();
         }
@@ -37,7 +36,7 @@ class _MovieWidgetState extends State<MovieWidget> {
         return SmartRefresher(
           controller: refreshController,
           enablePullDown: true,
-          enablePullUp: false,
+          enablePullUp: true,
           onLoading: () {
             context.read<MovieBloc>().add(MovieLoadMoreEvent());
           },
@@ -51,42 +50,54 @@ class _MovieWidgetState extends State<MovieWidget> {
 
             return ListView.builder(
               itemCount: movieState.items.count(),
+              physics: const ClampingScrollPhysics(),
+              controller: scrollController,
               itemBuilder: (context, index) {
                 return Card(
                   elevation: 4,
                   margin:
                       const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.0),
+                    borderRadius: BorderRadius.circular(12.0),
                   ),
                   shadowColor: Colors.white,
                   color: Colors.white70,
                   child: Stack(children: <Widget>[
                     Column(mainAxisAlignment: MainAxisAlignment.end, children: [
                       Center(
-                        child: Image(
-                          height: 200,
+                          child: ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(12),
+                            topRight: Radius.circular(12)),
+                        child: CachedNetworkImage(
+                          imageUrl: '${movieState.items[index].poster}',
                           width: double.infinity,
+                          height: 170,
                           fit: BoxFit.cover,
-                          image: NetworkImage(
-                              '${movieState.items[index].poster}'),
+                          errorWidget: (context, error, stackTrace) {
+                            return Container(
+                              width: double.infinity,
+                              height: 170,
+                              child: Image.asset(
+                                AppAssets.placeholderPhoto,
+                                fit: BoxFit.cover,
+                              ),
+                            );
+                          },
                         ),
-                      ),
+                      )),
                       Container(
                         width: double.infinity,
-                        color: Colors.white,
                         padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
                         child: Text(
                           '${movieState.items[index].title}',
                           style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
+                              fontSize: 18, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ),
                       ),
                       Container(
                         width: double.infinity,
-                        color: Colors.white,
-                        padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
                         child: Text(
                           '${movieState.items[index].year}',
                           style: const TextStyle(
@@ -94,6 +105,7 @@ class _MovieWidgetState extends State<MovieWidget> {
                           textAlign: TextAlign.center,
                         ),
                       ),
+                      const Spacing.verticalS(),
                     ]),
                   ]),
                 );

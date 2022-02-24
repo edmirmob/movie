@@ -5,3 +5,4 @@ export 'optional.dart';
 export 'pagination.dart';
 export 'place_details_model.dart';
 export 'movie_model.dart';
+export 'movie/_all.dart';

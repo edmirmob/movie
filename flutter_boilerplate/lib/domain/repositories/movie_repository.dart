@@ -2,7 +2,8 @@ import 'package:flutter_boilerplate/_all.dart';
 import 'package:rest_api_client/interfaces/_all.dart';
 
 abstract class IMovieRepository {
-  Future<List<MovieModel>?> fetchAllMovies();
+  Future<MovieResponseData<MovieModel>?> fetchAllMovies(
+      MovieSearchModel searchModel);
 }
 
 class MovieRepository implements IMovieRepository {
@@ -12,20 +13,24 @@ class MovieRepository implements IMovieRepository {
   });
 
   @override
-  Future<List<MovieModel>> fetchAllMovies() async {
+  Future<MovieResponseData<MovieModel>> fetchAllMovies(
+      MovieSearchModel searchModel) async {
     final List<MovieModel> allMovies = [];
 
-    final response = await restApiClient
-        .get('http://www.omdbapi.com/?s=movie&apikey=28b534bd');
+    final response = await restApiClient.get(
+        'http://www.omdbapi.com/?s=movie&apikey=28b534bd&page=${searchModel.page}');
 
     final responseDataItem = response.data['Search'] as List<dynamic>;
-
-    for (final entity in responseDataItem) {
-      allMovies.add(
-        MovieModel.fromMap(entity),
-      );
+    final totalCount = response.data['totalResults'] as String;
+    final isResponse = response.data['Response'] as String;
+    if (isResponse == 'True') {
+      for (final entity in responseDataItem) {
+        allMovies.add(
+          MovieModel.fromMap(entity),
+        );
+      }
     }
 
-    return allMovies;
+    return MovieResponseData(allMovies, totalCount, isResponse);
   }
 }

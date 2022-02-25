@@ -46,7 +46,8 @@ class _InheritedAppTheme extends InheritedWidget {
   }) : super(child: child);
 
   @override
-  bool updateShouldNotify(_InheritedAppTheme old) => appThemeData != old.appThemeData;
+  bool updateShouldNotify(_InheritedAppTheme old) =>
+      appThemeData != old.appThemeData;
 }
 
 class AppTheme extends StatelessWidget {
@@ -95,7 +96,7 @@ class AppTheme extends StatelessWidget {
           surface: Colors.white,
           background: Colors.white,
           error: Colors.white,
-          onPrimary: Colors.white,
+          onPrimary: Colors.black,
           onSecondary: Colors.white,
           onSurface: Color(0xFF1D1D1D),
           onBackground: Colors.white,
@@ -105,7 +106,7 @@ class AppTheme extends StatelessWidget {
         canvasColor: const Color(0xfffafafa),
         scaffoldBackgroundColor: Colors.white,
         appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white,
+          backgroundColor: Color.fromARGB(255, 255, 255, 255),
           iconTheme: IconThemeData(color: Color(0xFF1D1D1D)),
           actionsIconTheme: IconThemeData(color: Color(0xFF1D1D1D), size: 16),
           elevation: 0,
@@ -147,7 +148,8 @@ class AppTheme extends StatelessWidget {
             fontFamily: AppFonts.mavenProMedium,
           ),
           unselectedItemColor: Colors.black38,
-          unselectedIconTheme: IconThemeData(size: 22, color: Color(0xFFCCCCCC)),
+          unselectedIconTheme:
+              IconThemeData(size: 22, color: Color(0xFFCCCCCC)),
           unselectedLabelStyle: TextStyle(
             fontSize: 10,
             color: Colors.black38,
@@ -418,7 +420,8 @@ class AppTheme extends StatelessWidget {
           ),
           errorMaxLines: null,
           isDense: false,
-          contentPadding: EdgeInsets.only(top: 12, bottom: 12, left: 0, right: 0),
+          contentPadding:
+              EdgeInsets.only(top: 12, bottom: 12, left: 0, right: 0),
           isCollapsed: false,
           prefixStyle: TextStyle(
             color: Color(0xdd000000),
@@ -595,6 +598,7 @@ class AppTheme extends StatelessWidget {
   }
 
   static AppThemeData of(BuildContext context) {
-    return (context.dependOnInheritedWidgetOfExactType<_InheritedAppTheme>())!.appThemeData;
+    return (context.dependOnInheritedWidgetOfExactType<_InheritedAppTheme>())!
+        .appThemeData;
   }
 }

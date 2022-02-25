@@ -16,4 +16,5 @@ extension BuildContextBlocsExtensions on BuildContext {
   RegisterBloc get registerBloc => read<RegisterBloc>();
   ResetPasswordBloc get resetPasswordBloc => read<ResetPasswordBloc>();
   ThemeBloc get themeBloc => read<ThemeBloc>();
+  MovieBloc get movieBloc => read<MovieBloc>();
 }

@@ -1,9 +1,16 @@
 import 'package:flutter_boilerplate/_all.dart';
 
 class MovieSearchModel extends Pagination {
-  MovieSearchModel() : super();
+  String? title;
+  MovieSearchModel({
+    this.title,
+  }) : super();
 
-  MovieSearchModel copyWith() {
-    return MovieSearchModel();
+  MovieSearchModel copyWith({
+    String? title,
+  }) {
+    return MovieSearchModel(
+      title: title != null ? title.value : this.title,
+    );
   }
 }

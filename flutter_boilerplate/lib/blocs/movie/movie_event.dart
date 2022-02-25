@@ -11,6 +11,15 @@ class MovieLoadEvent extends MovieEvent {
 
   MovieLoadEvent({this.searchModel});
 }
+class MovieSearchEvent extends MovieEvent {
+  final MovieSearchModel searchModel;
+
+
+  MovieSearchEvent({
+    required this.searchModel,
+   
+  });
+}
 
 class MovieRefreshEvent extends MovieEvent {}
 

@@ -48,69 +48,87 @@ class _MovieWidgetState extends State<MovieWidget> {
               return const Loader();
             }
 
-            return ListView.builder(
-              itemCount: movieState.items.count(),
-              physics: const ClampingScrollPhysics(),
-              controller: scrollController,
-              itemBuilder: (context, index) {
-                return Card(
-                  elevation: 4,
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                  shadowColor: Colors.white,
-                  color: Colors.white70,
-                  child: Stack(children: <Widget>[
-                    Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-                      Center(
-                          child: ClipRRect(
-                        borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(12),
-                            topRight: Radius.circular(12)),
-                        child: CachedNetworkImage(
-                          imageUrl: '${movieState.items[index].poster}',
-                          width: double.infinity,
-                          height: 170,
-                          fit: BoxFit.cover,
-                          errorWidget: (context, error, stackTrace) {
-                            return Container(
-                              width: double.infinity,
-                              height: 170,
-                              child: Image.asset(
-                                AppAssets.placeholderPhoto,
-                                fit: BoxFit.cover,
-                              ),
-                            );
-                          },
+            return movieState.errorMessage == ''
+                ? ListView.builder(
+                    itemCount: movieState.items.count(),
+                    physics: const ClampingScrollPhysics(),
+                    controller: scrollController,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        elevation: 4,
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 10),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
                         ),
-                      )),
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
-                        child: Text(
-                          '${movieState.items[index].title}',
-                          style: const TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
+                        shadowColor: Colors.white,
+                        color: Colors.white70,
+                        child: Stack(children: <Widget>[
+                          Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Center(
+                                    child: ClipRRect(
+                                  borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(12),
+                                      topRight: Radius.circular(12)),
+                                  child: CachedNetworkImage(
+                                    imageUrl:
+                                        '${movieState.items[index].poster}',
+                                    width: double.infinity,
+                                    height: 170,
+                                    fit: BoxFit.cover,
+                                    errorWidget: (context, error, stackTrace) {
+                                      return Container(
+                                        width: double.infinity,
+                                        height: 170,
+                                        child: Image.asset(
+                                          AppAssets.placeholderPhoto,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                )),
+                                Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.fromLTRB(
+                                      8.0, 8.0, 8.0, 8.0),
+                                  child: Text(
+                                    '${movieState.items[index].title}',
+                                    style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                Container(
+                                  width: double.infinity,
+                                  child: Text(
+                                    '${movieState.items[index].year}',
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                const Spacing.verticalS(),
+                              ]),
+                        ]),
+                      );
+                    },
+                  )
+                : Center(
+                    child: Container(
+                      child: Text(
+                        movieState.errorMessage,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
                         ),
                       ),
-                      Container(
-                        width: double.infinity,
-                        child: Text(
-                          '${movieState.items[index].year}',
-                          style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      const Spacing.verticalS(),
-                    ]),
-                  ]),
-                );
-              },
-            );
+                    ),
+                  );
           }(),
         );
       },

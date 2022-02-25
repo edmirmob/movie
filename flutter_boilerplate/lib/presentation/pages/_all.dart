@@ -4,3 +4,4 @@ export 'introduction_page.dart';
 export 'sign_in_page.dart';
 export 'register_page.dart';
 export 'gallery/_all.dart';
+export 'movie/_all.dart';

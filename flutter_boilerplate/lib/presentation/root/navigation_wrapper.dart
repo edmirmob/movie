@@ -24,9 +24,11 @@ class _NavigationWrapperState extends State<NavigationWrapper> {
             switch (state.index) {
               case 0:
                 return Scaffold(
-                  appBar:
-                      AppBar(title: Text(context.translations.applicationName)),
-                  body: const MovieWidget(),
+                  appBar: AppBar(
+                    title: Text(context.translations.applicationName),
+                    elevation: 4,
+                  ),
+                  body: const Movie(),
                   // const Center(child: Text('First page')),
                 );
               case 1:

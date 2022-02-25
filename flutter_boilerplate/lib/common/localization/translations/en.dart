@@ -71,4 +71,5 @@ const TranslationModel translationEnglish = TranslationModel(
   clear: 'Clear',
   select: 'Select',
   noContent: 'No content',
+  tapToSearch: 'Tap to search movies...'
 );

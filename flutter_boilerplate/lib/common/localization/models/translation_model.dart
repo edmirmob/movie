@@ -69,6 +69,7 @@ class TranslationModel {
   final String clear;
   final String select;
   final String noContent;
+  final String tapToSearch;
 
   const TranslationModel({
     required this.applicationName,
@@ -141,5 +142,6 @@ class TranslationModel {
     required this.clear,
     required this.select,
     required this.noContent,
+    required this.tapToSearch,
   });
 }

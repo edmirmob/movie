@@ -16,9 +16,9 @@ class MovieRepository implements IMovieRepository {
   Future<MovieResponseData<MovieModel>> fetchAllMovies(
       MovieSearchModel searchModel) async {
     final List<MovieModel> allMovies = [];
-
+    final search = searchModel.title.isNotNullOrEmpty ? searchModel.title : 'movie';
     final response = await restApiClient.get(
-        'http://www.omdbapi.com/?s=movie&apikey=28b534bd&page=${searchModel.page}');
+        'http://www.omdbapi.com/?s=$search&apikey=28b534bd&page=${searchModel.page}');
 
     final responseDataItem = response.data['Search'] as List<dynamic>;
     final totalCount = response.data['totalResults'] as String;
@@ -30,7 +30,11 @@ class MovieRepository implements IMovieRepository {
         );
       }
     }
+    var error = '';
+    if (isResponse == 'False') {
+      error = response.data['Error'] as String;
+    }
 
-    return MovieResponseData(allMovies, totalCount, isResponse);
+    return MovieResponseData(allMovies, totalCount, isResponse, error);
   }
 }

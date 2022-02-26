@@ -12,8 +12,8 @@ class _MovieState extends State<Movie> {
   Widget build(BuildContext context) {
     return Column(
       children: const [
-        Expanded(flex: 2, child: SearchMovieWidget()),
-        Expanded(flex: 8, child: MovieWidget()),
+        Expanded(flex: 1, child: SearchMovieWidget()),
+        Expanded(flex: 5, child: MovieWidget()),
       ],
     );
   }

@@ -120,12 +120,26 @@ class _MovieWidgetState extends State<MovieWidget> {
                   )
                 : Center(
                     child: Container(
-                      child: Text(
-                        movieState.errorMessage,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
+                      child: Column(
+                        children: [
+                          const Spacing.verticalL(),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: 170,
+                            child: Image.asset(
+                              AppAssets.placeholderNoContent,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          const Spacing.verticalL(),
+                          Text(
+                            movieState.errorMessage,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   );

@@ -20,10 +20,12 @@ class _NavigationWrapperState extends State<NavigationWrapper> {
     return BlocBuilder<NavigationBloc, NavigationState>(
       builder: (context, state) {
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           body: () {
             switch (state.index) {
               case 0:
                 return Scaffold(
+                  resizeToAvoidBottomInset: false,
                   appBar: AppBar(
                     title: Text(context.translations.applicationName),
                     elevation: 4,
